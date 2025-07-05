@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WM0D89YGJ5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-WM0D89YGJ5');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run 1 - Classic Platform Runner | SpeedGames</title>
+    <meta name="description" content="Test your reflexes in this classic platform runner! Navigate through challenging levels, avoid obstacles, and reach the finish line.">
+    <link rel="canonical" href="https://www.speedgames.io/run-1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 活力跑酷主题配色方案 */
+        :root {
+            --runner-blue: #0b8cff;
+            --runner-orange: #ff6b35;
+            --runner-green: #00d084;
+            --runner-purple: #a100ff;
+            --dark-bg: #121212;
+            --light-bg: #1e1e1e;
+            --text-light: #f5f5f7;
+            --text-gray: #b0b0b0;
+            --card-bg: #252525;
+            --accent-border: #353535;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a1a, #121212);
+            color: var(--text-light);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 赛道背景效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 24px, rgba(11, 140, 255, 0.1) 24px, rgba(11, 140, 255, 0.1) 25px, transparent 25px),
+                linear-gradient(180deg, transparent 24px, rgba(11, 140, 255, 0.1) 24px, rgba(11, 140, 255, 0.1) 25px, transparent 25px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* 导航栏 */
+        header {
+            background: rgba(18, 18, 18, 0.95);
+            border-bottom: 1px solid var(--accent-border);
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--runner-blue);
+        }
+        
+        .logo i {
+            margin-right: 12px;
+            font-size: 32px;
+            color: var(--runner-green);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 8px 5px;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--runner-blue);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--text-light);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* 主内容区 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        
+        .game-header {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 72px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--runner-blue), var(--runner-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(11, 140, 255, 0.3);
+        }
+        
+        .tagline {
+            font-size: 26px;
+            color: var(--text-light);
+            font-weight: 400;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.4;
+        }
+        
+        .highlight {
+            color: var(--runner-green);
+            font-weight: 600;
+        }
+        
+        /* 游戏容器 */
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 50px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(11, 140, 255, 0.2);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--runner-blue);
+            position: relative;
+        }
+        
+        .game-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--runner-blue), var(--runner-green), var(--runner-purple));
+            z-index: -1;
+            border-radius: 18px;
+            animation: borderAnimation 3s infinite linear;
+        }
+        
+        @keyframes borderAnimation {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        .game-frame {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        }
+        
+        .game-frame iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* 游戏详情区域 */
+        .game-details {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-border);
+        }
+        
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--runner-blue);
+            margin: 0 0 30px;
+            position: relative;
+            padding-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--runner-blue), transparent);
+            border-radius: 2px;
+        }
+        
+        p {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--accent-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--runner-blue), var(--runner-green));
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(11, 140, 255, 0.2);
+            border-color: var(--runner-blue);
+        }
+        
+        .feature-card i {
+            font-size: 48px;
+            color: var(--runner-blue);
+            margin-bottom: 25px;
+        }
+        
+        .feature-card h3 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .feature-card p {
+            font-size: 18px;
+            color: var(--text-gray);
+        }
+        
+        .game-info {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 35px;
+            margin: 40px 0;
+            border: 1px solid var(--accent-border);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(40, 40, 40, 0.5);
+            border-radius: 12px;
+        }
+        
+        .info-item i {
+            color: var(--runner-blue);
+            font-size: 28px;
+            width: 50px;
+            text-align: center;
+        }
+        
+        .info-text {
+            flex: 1;
+        }
+        
+        .info-text strong {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: var(--text-light);
+        }
+        
+        .info-text span {
+            color: var(--text-gray);
+            font-size: 18px;
+        }
+        
+        .screenshot-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .screenshot {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            height: 200px;
+            background: linear-gradient(45deg, #2a2a4a, #1a1a2e);
+            border: 1px solid var(--accent-border);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--runner-blue);
+        }
+        
+        .screenshot:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(11, 140, 255, 0.3);
+            background: linear-gradient(45deg, #2a2a6a, #1a1a4e);
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: rgba(18, 18, 18, 0.95);
+            border-top: 1px solid var(--accent-border);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-light);
+            backdrop-filter: blur(10px);
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 25px 0;
+            gap: 25px;
+        }
+        
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--runner-blue);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            color: var(--text-light);
+            font-size: 22px;
+            transition: all 0.3s;
+            border: 1px solid var(--accent-border);
+        }
+        
+        .social-icons a:hover {
+            background: var(--runner-blue);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            font-size: 16px;
+            margin-top: 25px;
+            color: var(--text-gray);
+        }
+        
+        /* 跑酷角色动画 */
+        .runner-character {
+            position: absolute;
+            bottom: 0;
+            left: -100px;
+            width: 80px;
+            height: 80px;
+            background: var(--runner-blue);
+            border-radius: 50% 50% 0 0;
+            animation: runAnimation 12s linear infinite;
+            z-index: 0;
+        }
+        
+        .runner-character::before,
+        .runner-character::after {
+            content: '';
+            position: absolute;
+            background: #fff;
+            width: 12px;
+            height: 40px;
+            bottom: -30px;
+            animation: legAnimation 0.5s infinite alternate;
+        }
+        
+        .runner-character::before {
+            left: 20px;
+            animation-delay: 0s;
+        }
+        
+        .runner-character::after {
+            left: 48px;
+            animation-delay: 0.25s;
+        }
+        
+        @keyframes runAnimation {
+            0% { left: -100px; }
+            100% { left: calc(100% + 100px); }
+        }
+        
+        @keyframes legAnimation {
+            0% { transform: rotate(20deg); }
+            100% { transform: rotate(-20deg); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 56px;
+            }
+            
+            .tagline {
+                font-size: 22px;
+            }
+            
+            h2 {
+                font-size: 36px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            nav li {
+                margin-left: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 42px;
+            }
+            
+            .tagline {
+                font-size: 20px;
+            }
+            
+            h2 {
+                font-size: 32px;
+                margin-bottom: 25px;
+            }
+            
+            .navbar {
+                height: 70px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            nav a {
+                font-size: 16px;
+            }
+            
+            .game-header {
+                padding: 30px 0;
+            }
+            
+            .feature-card {
+                padding: 25px;
+            }
+            
+            .game-info {
+                padding: 25px;
+            }
+            
+            .game-details {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            .tagline {
+                font-size: 18px;
+            }
+            
+            h2 {
+                font-size: 28px;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 15px 0;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px 10px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .screenshot-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 跑酷角色动画 -->
+    <div class="runner-character"></div>
+    
+    <header>
+        <div class="navbar">
+            <a href="/" class="logo">
+                <i class="fas fa-running"></i>
+                SPEED<span>GAMES</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/games">Games</a></li>
+                    <li><a href="/platformers">Platformers</a></li>
+                    <li><a href="/leaderboards">Leaderboards</a></li>
+                    <li><a href="/community">Community</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="game-header">
+            <h1>RUN 1</h1>
+            <p class="tagline">Navigate through challenging levels and <span class="highlight">test your reflexes</span> in this classic platform runner</p>
+        </div>
+        
+        <div class="game-container">
+            <div class="game-frame">
+                <iframe src="https://cloud.onlinegames.io/games/2024/flash/run-1/index.html" 
+                        title="Run 1 Game" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <div class="game-details">
+            <h2>Endless Running Challenge</h2>
+            <p>Run 1 is a classic platform runner that challenges your reflexes and timing. Navigate through increasingly difficult levels filled with obstacles, gaps, and moving platforms. With simple controls but challenging gameplay, Run 1 has been entertaining players for over a decade.</p>
+            <p>What starts as a straightforward run soon evolves into a complex puzzle of timing and precision. As you progress, you'll encounter anti-gravity sections, disappearing platforms, and complex obstacle courses that will test your skills to the limit.</p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-shoe-prints"></i>
+                    <h3>Precise Controls</h3>
+                    <p>Master the simple yet responsive controls to navigate through challenging obstacles with pixel-perfect accuracy.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-infinity"></i>
+                    <h3>Endless Levels</h3>
+                    <p>Progress through increasingly difficult levels that introduce new mechanics and challenges.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-medal"></i>
+                    <h3>Skill-Based Gameplay</h3>
+                    <p>Compete for the fastest times and perfect runs on each level to climb the leaderboards.</p>
+                </div>
+            </div>
+            
+            <h2>Gameplay Mechanics</h2>
+            <p>Run 1 features simple mechanics that are easy to learn but difficult to master. Use arrow keys to move your character through a series of platform-based levels set in a minimalist space environment. The core challenge comes from perfectly timing your jumps and movements to navigate increasingly complex obstacles.</p>
+            <p>As you progress, you'll encounter unique gameplay elements like gravity shifts, where up becomes down and down becomes up. These sections require quick thinking and adaptation as you navigate platforms from different orientations.</p>
+            
+            <div class="screenshot-gallery">
+                <div class="screenshot"><i class="fas fa-running"></i></div>
+                <div class="screenshot"><i class="fas fa-grip-lines"></i></div>
+                <div class="screenshot"><i class="fas fa-moon"></i></div>
+                <div class="screenshot"><i class="fas fa-infinity"></i></div>
+            </div>
+            
+            <div class="game-info">
+                <h2>Game Information</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <i class="fas fa-history"></i>
+                        <div class="info-text">
+                            <strong>Original Release</strong>
+                            <span>2010</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-gamepad"></i>
+                        <div class="info-text">
+                            <strong>Controls</strong>
+                            <span>Arrow Keys</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-layer-group"></i>
+                        <div class="info-text">
+                            <strong>Levels</strong>
+                            <span>50+</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="info-text">
+                            <strong>Players</strong>
+                            <span>50M+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Advanced Techniques</h2>
+            <p>Mastering Run 1 requires more than just quick reflexes. Here are some advanced techniques used by top players:</p>
+            <p><strong>1. Momentum Conservation:</strong> Maintain your speed by landing on platforms without stopping. Time your jumps to hit the edge of platforms.</p>
+            <p><strong>2. Wall Running:</strong> Use walls to change direction and avoid obstacles. This technique is essential in later levels.</p>
+            <p><strong>3. Gravity Timing:</strong> Anticipate gravity shifts and position yourself to take advantage of the new orientation.</p>
+            <p><strong>4. Platform Prediction:</strong> Study the patterns of moving platforms to time your movements perfectly.</p>
+            <p><strong>5. Shortcut Discovery:</strong> Some levels have hidden paths that can significantly reduce your completion time.</p>
+            
+            <h2>Why Players Love Run 1</h2>
+            <p>Run 1 has maintained its popularity for over a decade due to its perfect balance of simplicity and challenge. The minimalist design focuses attention on the core gameplay, while the precise controls provide a satisfying experience for both casual and hardcore players.</p>
+            <p>The game's difficulty curve is expertly designed, introducing new mechanics gradually and providing players with a genuine sense of accomplishment as they master each level. This, combined with the competitive aspect of speedrunning and leaderboard climbing, creates a compelling gameplay loop that keeps players coming back.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-reddit"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="/support">Support</a>
+                <a href="/about">About Us</a>
+                <a href="/faq">FAQ</a>
+            </div>
+            <p class="copyright">© 2024 SpeedGames. All rights reserved. "Run 1" is a trademark of SpeedGames Interactive.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 添加动态效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建多个跑酷角色
+            function createRunners() {
+                const body = document.querySelector('body');
+                const runnerCount = 3;
+                
+                for (let i = 0; i < runnerCount; i++) {
+                    const runner = document.createElement('div');
+                    runner.className = 'runner-character';
+                    
+                    // 随机延迟
+                    const delay = Math.random() * 10;
+                    runner.style.animationDelay = `-${delay}s`;
+                    
+                    // 随机大小
+                    const size = 60 + Math.random() * 40;
+                    runner.style.width = `${size}px`;
+                    runner.style.height = `${size}px`;
+                    
+                    // 随机颜色
+                    const colors = ['#0b8cff', '#ff6b35', '#00d084', '#a100ff'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    runner.style.background = color;
+                    
+                    // 随机垂直位置
+                    const bottom = 20 + Math.random() * 60;
+                    runner.style.bottom = `${bottom}px`;
+                    
+                    body.appendChild(runner);
+                }
+            }
+            
+            createRunners();
+            
+            // 添加滚动视差效果
+            window.addEventListener('scroll', function() {
+                const scrollY = window.scrollY;
+                const gameHeader = document.querySelector('.game-header');
+                gameHeader.style.transform = `translateY(${scrollY * 0.3}px)`;
+                
+                const gameContainer = document.querySelector('.game-container');
+                gameContainer.style.transform = `translateY(${scrollY * 0.2}px) rotate(${scrollY * 0.05}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>
